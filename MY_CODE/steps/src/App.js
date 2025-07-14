@@ -25,8 +25,12 @@ export default function App() {
             Step {step}: {messages[step - 1]}
           </p>
           <div className="buttons">
-            <button onClick={() => setStep(Math.max(step - 1, 1))}>prev</button>
-            <button onClick={() => setStep(Math.min(step + 1, 3))}>next</button>
+            <button onClick={() => setStep((s) => Math.max(s - 1, 1))}>
+              prev
+            </button>
+            <button onClick={() => setStep((s) => Math.min(s + 1, 3))}>
+              next
+            </button>
           </div>
         </div>
       )}

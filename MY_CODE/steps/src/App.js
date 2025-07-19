@@ -25,15 +25,26 @@ export default function App() {
             Step {step}: {messages[step - 1]}
           </p>
           <div className="buttons">
-            <button onClick={() => setStep((s) => Math.max(s - 1, 1))}>
+            <Button onClick={() => setStep((s) => Math.max(s - 1, 1))}>
               prev
-            </button>
-            <button onClick={() => setStep((s) => Math.min(s + 1, 3))}>
+            </Button>
+            <Button onClick={() => setStep((s) => Math.min(s + 1, 3))}>
               next
-            </button>
+            </Button>
           </div>
         </div>
       )}
     </>
+  );
+}
+
+function Button({ children, onClick, textColor, bgColor }) {
+  return (
+    <button
+      style={{ backgroundColor: "#7950f2", color: "#fff" }}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }

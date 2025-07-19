@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Stats } from "./Stats";
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -140,20 +141,5 @@ function Item({ item, onDeleteItem, onToggleItem }) {
       </span>
       <button onClick={() => onDeleteItem(item.id)}>X</button>
     </li>
-  );
-}
-
-function Stats({ items }) {
-  const numItems = items.length;
-  const numPacked = items.reduce((acc, cur) => (acc += cur.packed), 0);
-
-  return (
-    <footer className="stats">
-      {" "}
-      <em>
-        You have {numItems} items on list, and already packed {numPacked} (
-        {(numPacked / numItems) * 100} %)
-      </em>
-    </footer>
   );
 }

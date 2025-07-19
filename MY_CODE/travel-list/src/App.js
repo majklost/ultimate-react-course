@@ -28,7 +28,7 @@ export default function App() {
         onDeleteItem={handleDeleteItem}
         onToggleItems={handleToggleItem}
       />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
@@ -76,10 +76,32 @@ function Form({ onAddItems }) {
   );
 }
 function PackingList({ items, onDeleteItem, onToggleItems }) {
+  const [sortBy, setSortBy] = useState("input");
+
+  let sortedItems;
+
+  switch (sortBy) {
+    case "input":
+      sortedItems = items;
+      break;
+
+    case "description":
+      sortedItems = items
+        .slice()
+        .sort((a, b) => a.description.localeCompare(b.description));
+      break;
+
+    case "packed":
+      sortedItems.slice().sort((a, b) => Number(a.packed) - Number(b.packed));
+      break;
+    default:
+      throw new Error("Unknow sorting");
+  }
+
   return (
     <div className="list">
       <ul>
-        {items.map((item) => (
+        {sortedItems.map((item) => (
           <Item
             item={item}
             key={item.id}
@@ -88,6 +110,17 @@ function PackingList({ items, onDeleteItem, onToggleItems }) {
           />
         ))}
       </ul>
+      <div
+        className="actions"
+        value={sortBy}
+        onChange={(e) => setSortBy(e.target.value)}
+      >
+        <select>
+          <option value={"input"}>Sort by input order</option>
+          <option value={"description"}>Sort by description</option>
+          <option value={"packed"}>Sort by packed</option>
+        </select>
+      </div>
     </div>
   );
 }
@@ -110,9 +143,9 @@ function Item({ item, onDeleteItem, onToggleItem }) {
   );
 }
 
-function Stats({ items}) {
+function Stats({ items }) {
   const numItems = items.length;
-  const numPacked = items.reduce(())
+  const numPacked = items.reduce((acc, cur) => (acc += cur.packed), 0);
 
   return (
     <footer className="stats">

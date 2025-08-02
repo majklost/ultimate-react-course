@@ -9,10 +9,15 @@ const formatDate = (date) =>
     weekday: "long",
   }).format(new Date(date));
 
-function CityItem({ city: { cityName, emoji, date, id, position } }) {
+function CityItem({ city: { cityName, emoji, date, id, position }, active }) {
   return (
     <li>
-      <Link className={styles.cityItem} to={`${id}?lat=${position.lat}`}>
+      <Link
+        className={`${styles.cityItem} ${
+          active ? styles["cityItem--active"] : ""
+        } `}
+        to={`${id}?lat=${position.lat}`}
+      >
         <span className={styles.emoji}>{emoji}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
